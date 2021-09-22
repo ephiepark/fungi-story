@@ -1,0 +1,23 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+fungi-story-web/node_modules
+fungi-story-web/.pnp
+fungi-story-web/.pnp.js
+
+# testing
+fungi-story-web/coverage
+
+# production
+fungi-story-web/build
+
+# misc
+fungi-story-web/.DS_Store
+fungi-story-web/.env.local
+fungi-story-web/.env.development.local
+fungi-story-web/.env.test.local
+fungi-story-web/.env.production.local
+
+fungi-story-web/npm-debug.log*
+fungi-story-web/yarn-debug.log*
+fungi-story-web/yarn-error.log*
