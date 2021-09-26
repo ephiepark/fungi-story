@@ -1,3 +1,25 @@
+# Goal of the project
+
+Everytime there is an idea about web app side project, significant amount time is spent on building boilerplate code. Especially getting the authentication flow done take non trivial amount of time. In order to have a complete authentication flow, sign up, sign in, forgot password, email verification all needs to be covered. 
+
+This project provides the code with basic authentication flow done so that you can jump right into the fun part of the project! 
+
+# Note
+
+ - This project is built with React / Redux / Firebase / Typescript. 
+
+# How to use this
+1. Create a new firebase project
+    - Enable firebase authentication
+3. Fork this repo
+4. Clone the repo
+5. Update src/firebase/firebaseConfig.ts file to have config setting from your firebase project. 
+6. Hack it away!
+    - The project is built using Create React App. "Getting Started with Create React App" still applies. 
+
+
+-------
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
@@ -44,27 +66,3 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
