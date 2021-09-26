@@ -1,6 +1,6 @@
 import { FirebaseApp } from "firebase/app";
 import { doc, setDoc, Firestore, getDoc, DocumentSnapshot, DocumentData, getFirestore, addDoc, collection } from "firebase/firestore";
-import { firestoreConfig } from './firestoreConfig';
+import { firestoreConfig } from './firebaseConfig';
 
 import {
   BackendApi,

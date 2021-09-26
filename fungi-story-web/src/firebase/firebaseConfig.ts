@@ -7,3 +7,10 @@ export default {
   appId: "1:104628365708:web:da80b4af0b2084b4240ea9",
   measurementId: "G-4HQ08B8ZYG"
 };
+
+export const firestoreConfig = {
+  collection: {
+    user: 'USER',
+    directory: 'DIRECTORY',
+  },
+};
