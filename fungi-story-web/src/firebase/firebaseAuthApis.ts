@@ -51,6 +51,7 @@ export const genSignOut = (): Promise<void> => {
 
 export const getUserFromFirebaseUserNonnull = (user: FirebaseUser): User => {
   return {
+    id: user.uid,
     email: user.email,
     isVerified: user.emailVerified,
   };
