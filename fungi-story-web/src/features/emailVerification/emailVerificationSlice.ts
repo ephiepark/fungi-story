@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
 
-import { genSendEmailVerificationToCurrentUser } from '../../firebase/firebaseAuthApis';
+import { authApi } from '../../firebase/firebaseInit';
 
 
 export interface EmailVerificationState {
@@ -17,7 +17,7 @@ const initialState: EmailVerificationState = {
 export const sendEmailVerificationAsync = createAsyncThunk(
   'emailVerification/sendEmailVerification',
   async (): Promise<void> => {
-    return await genSendEmailVerificationToCurrentUser();
+    return await authApi.genSendEmailVerificationToCurrentUser();
   }
 );
 

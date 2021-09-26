@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
 
-import { genSignUpWithEmailAndPassword } from '../../firebase/firebaseAuthApis';
+import { UserSession } from '../../types/apiTypes';
 
-import { UserInfo } from '../../types/apiTypes';
+import { authApi } from '../../firebase/firebaseInit';
 
 export interface SignUpState {
   error: {errorCode: string, errorMessage: string} | null;
@@ -17,8 +17,8 @@ const initialState: SignUpState = {
 
 export const signUpAsync = createAsyncThunk(
   'signUp/signUpRequest',
-  async (emailAndPassword: {email: string, password: string}): Promise<UserInfo> => {
-    const response = await genSignUpWithEmailAndPassword(
+  async (emailAndPassword: {email: string, password: string}): Promise<UserSession> => {
+    const response = await authApi.genSignUpWithEmailAndPassword(
       emailAndPassword.email,
       emailAndPassword.password
     );

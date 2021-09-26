@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
 
-import { genSendPasswordResetEmail } from '../../firebase/firebaseAuthApis';
+import { authApi } from '../../firebase/firebaseInit';
 
 
 export interface ResetPasswordState {
@@ -17,7 +17,7 @@ const initialState: ResetPasswordState = {
 export const sendPasswordResetEmailAsync = createAsyncThunk(
   'resetPassword/sendPasswordResetEmail',
   async (email: string): Promise<void> => {
-    return await genSendPasswordResetEmail(email);
+    return await authApi.genSendPasswordResetEmail(email);
   }
 );
 

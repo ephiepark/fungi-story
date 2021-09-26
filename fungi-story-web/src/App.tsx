@@ -1,15 +1,9 @@
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import {} from "./firebase/firebaseInit";
 
 import AppHeader from "./components/AppHeader";
 import SignIn from "./features/signIn/SignIn";
 import SignUp from "./features/signUp/SignUp";
 import ResetPassword from "./features/resetPassword/ResetPassword";
-import firebaseConfig from "./firebase/firebaseConfig";
-import { init as authInit } from "./firebase/firebaseAuthApis";
 import { useAppSelector } from './app/hooks';
 import { selectUser } from './features/user/userSlice';
 import { routeConfig } from './configs/routeConfig';
@@ -26,15 +20,9 @@ import { changes, patch } from './lib/diffApis';
 
 console.log(changes, patch);
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-
-authInit();
-
 function App() {
   const user = useAppSelector(selectUser);
-  const text = user === null ? 'Logged out' : 'Logged in as ' + user.email;
+  const text = user === null ? 'Logged out' : 'Logged in as ' + user.userInfo.email;
   const isVerified = user?.isVerified;
   const isVerificationNecessary = (user !== null && !isVerified);
   return (
