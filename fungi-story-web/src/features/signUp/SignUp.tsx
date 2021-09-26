@@ -1,6 +1,6 @@
 import { useAppSelector } from '../../app/hooks';
 import { selectUser } from '../user/userSlice';
-import { AuthConfig } from "../../types/authTypes";
+import { RouteConfig } from "../../configs/routeConfig";
 
 import * as React from 'react';
 import Alert from '@mui/material/Alert';
@@ -25,7 +25,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 const theme = createTheme();
 
-export default function SignUp(props: { authConfig: AuthConfig }) {
+export default function SignUp(props: { routeConfig: RouteConfig }) {
   const dispatch = useDispatch();
   const user = useAppSelector(selectUser);
   const error = useAppSelector(selectSignUpError);
@@ -130,7 +130,7 @@ export default function SignUp(props: { authConfig: AuthConfig }) {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link variant="body2" component={RouterLink} to={"/" + props.authConfig.signInRoute}>
+                <Link variant="body2" component={RouterLink} to={"/" + props.routeConfig.signInRoute}>
                   Already have an account? Sign in
                 </Link>
               </Grid>

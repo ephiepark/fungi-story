@@ -1,4 +1,4 @@
-import { AuthConfig } from "../types/authTypes";
+import { RouteConfig } from "../configs/routeConfig";
 import { useAppSelector } from '../app/hooks';
 import { selectUser } from '../features/user/userSlice';
 import { genSignOut } from '../firebase/firebaseAuthApis';
@@ -10,7 +10,7 @@ import Link from '@mui/material/Link';
 
 import { Link as RouterLink } from 'react-router-dom';
 
-function LoggedInNav(props: { authConfig: AuthConfig }) {
+function LoggedInNav(props: { routeConfig: RouteConfig }) {
   return (
     <nav>
       <Link
@@ -27,7 +27,7 @@ function LoggedInNav(props: { authConfig: AuthConfig }) {
   );
 }
 
-function LoggedOutNav(props: { authConfig: AuthConfig }) {
+function LoggedOutNav(props: { routeConfig: RouteConfig }) {
   return (
     <nav>
       <Link
@@ -35,7 +35,7 @@ function LoggedOutNav(props: { authConfig: AuthConfig }) {
         color="text.primary"
         sx={{ my: 1, mx: 1.5 }}
         component={RouterLink}
-        to={"/" + props.authConfig.signInRoute}
+        to={"/" + props.routeConfig.signInRoute}
       >
         Sign In
       </Link>
@@ -44,7 +44,7 @@ function LoggedOutNav(props: { authConfig: AuthConfig }) {
         color="text.primary"
         sx={{ my: 1, mx: 1.5 }}
         component={RouterLink}
-        to={"/" + props.authConfig.signUpRoute}
+        to={"/" + props.routeConfig.signUpRoute}
       >
         Sign Up
       </Link>
@@ -52,11 +52,11 @@ function LoggedOutNav(props: { authConfig: AuthConfig }) {
   );
 }
 
-export default function AppHeader(props: { authConfig: AuthConfig }) {
+export default function AppHeader(props: { routeConfig: RouteConfig }) {
   const user = useAppSelector(selectUser);
-  let nav = <LoggedInNav authConfig={props.authConfig} />;
+  let nav = <LoggedInNav routeConfig={props.routeConfig} />;
   if (user === null) {
-    nav = <LoggedOutNav authConfig={props.authConfig} />;
+    nav = <LoggedOutNav routeConfig={props.routeConfig} />;
   }
   return (
     <AppBar

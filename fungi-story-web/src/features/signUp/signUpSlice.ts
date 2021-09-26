@@ -3,7 +3,7 @@ import { RootState } from '../../app/store';
 
 import { genSignUpWithEmailAndPassword } from '../../firebase/firebaseAuthApis';
 
-import { User } from '../../types/authTypes';
+import { UserInfo } from '../../types/apiTypes';
 
 export interface SignUpState {
   error: {errorCode: string, errorMessage: string} | null;
@@ -17,7 +17,7 @@ const initialState: SignUpState = {
 
 export const signUpAsync = createAsyncThunk(
   'signUp/signUpRequest',
-  async (emailAndPassword: {email: string, password: string}): Promise<User> => {
+  async (emailAndPassword: {email: string, password: string}): Promise<UserInfo> => {
     const response = await genSignUpWithEmailAndPassword(
       emailAndPassword.email,
       emailAndPassword.password

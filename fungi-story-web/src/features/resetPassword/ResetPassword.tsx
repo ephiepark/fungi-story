@@ -1,6 +1,6 @@
 import { useAppSelector } from '../../app/hooks';
 import { selectUser } from '../user/userSlice';
-import { AuthConfig } from "../../types/authTypes";
+import { RouteConfig } from "../../configs/routeConfig";
 
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
@@ -25,7 +25,7 @@ import Alert from '@mui/material/Alert';
 
 const theme = createTheme();
 
-export default function ResetPassword(props: { authConfig: AuthConfig }) {
+export default function ResetPassword(props: { routeConfig: RouteConfig }) {
   const dispatch = useDispatch();
   const error = useAppSelector(selectResetPasswordError);
   const user = useAppSelector(selectUser);

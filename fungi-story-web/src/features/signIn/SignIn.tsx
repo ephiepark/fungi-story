@@ -1,6 +1,6 @@
 import { useAppSelector } from '../../app/hooks';
 import { selectUser } from '../user/userSlice';
-import { AuthConfig } from "../../types/authTypes";
+import { RouteConfig } from "../../configs/routeConfig";
 import { selectSignInError, selectSignInStatus, signInAsync } from './signInSlice';
 
 import * as React from 'react';
@@ -25,7 +25,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 const theme = createTheme();
 
-export default function SignIn(props: { authConfig: AuthConfig }) {
+export default function SignIn(props: { routeConfig: RouteConfig }) {
   const dispatch = useDispatch();
   const user = useAppSelector(selectUser);
   const error = useAppSelector(selectSignInError);
@@ -104,12 +104,12 @@ export default function SignIn(props: { authConfig: AuthConfig }) {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link variant="body2" component={RouterLink} to={"/" + props.authConfig.resetPasswordRoute}>
+                <Link variant="body2" component={RouterLink} to={"/" + props.routeConfig.resetPasswordRoute}>
                   Forgot password?
                 </Link>
               </Grid>
               <Grid item>
-                <Link variant="body2" component={RouterLink} to={"/" + props.authConfig.signUpRoute}>
+                <Link variant="body2" component={RouterLink} to={"/" + props.routeConfig.signUpRoute}>
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>

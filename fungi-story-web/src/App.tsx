@@ -12,6 +12,7 @@ import firebaseConfig from "./firebase/firebaseConfig";
 import { init as authInit } from "./firebase/firebaseAuthApis";
 import { useAppSelector } from './app/hooks';
 import { selectUser } from './features/user/userSlice';
+import { routeConfig } from './configs/routeConfig';
 
 import {
   BrowserRouter as Router,
@@ -29,7 +30,7 @@ console.log(changes, patch);
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 
-const authConfig = authInit();
+authInit();
 
 function App() {
   const user = useAppSelector(selectUser);
@@ -38,22 +39,22 @@ function App() {
   const isVerificationNecessary = (user !== null && !isVerified);
   return (
     <Router>
-      <AppHeader authConfig={authConfig} />
+      <AppHeader routeConfig={routeConfig} />
       <Switch>
-        <Route path={'/' + authConfig.signInRoute}>
-          <SignIn authConfig={authConfig} />
+        <Route path={'/' + routeConfig.signInRoute}>
+          <SignIn routeConfig={routeConfig} />
         </Route>
-        <Route path={'/' + authConfig.signUpRoute}>
-          <SignUp authConfig={authConfig} />
+        <Route path={'/' + routeConfig.signUpRoute}>
+          <SignUp routeConfig={routeConfig} />
         </Route>
-        <Route path={'/' + authConfig.resetPasswordRoute}>
-          <ResetPassword authConfig={authConfig} />
+        <Route path={'/' + routeConfig.resetPasswordRoute}>
+          <ResetPassword routeConfig={routeConfig} />
         </Route>
-        <Route path={'/' + authConfig.emailVerificationRoute}>
+        <Route path={'/' + routeConfig.emailVerificationRoute}>
           <EmailVerification />
         </Route>
         <Route path="/">
-          {isVerificationNecessary ? <Redirect to={'/' + authConfig.emailVerificationRoute} /> : text}
+          {isVerificationNecessary ? <Redirect to={'/' + routeConfig.emailVerificationRoute} /> : text}
         </Route>
       </Switch>
     </Router>

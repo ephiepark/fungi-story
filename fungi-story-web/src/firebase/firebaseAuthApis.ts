@@ -1,6 +1,7 @@
 import { setUser } from '../features/user/userSlice';
 import { store } from '../app/store';
-import { AuthConfig, User } from "../types/authTypes";
+import { RouteConfig } from '../configs/routeConfig';
+import { UserInfo } from "../types/apiTypes";
 import {
   User as FirebaseUser,
   signInWithEmailAndPassword,
@@ -27,7 +28,7 @@ export const genSendPasswordResetEmail = async (email: string): Promise<void> =>
   return await sendPasswordResetEmail(getAuth(), email);
 };
 
-export const genSignInWithEmailAndPassword = async (email: string, password: string): Promise<User> => {
+export const genSignInWithEmailAndPassword = async (email: string, password: string): Promise<UserInfo> => {
   const auth = getAuth();
   return setPersistence(auth, browserLocalPersistence).then(async () => {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
@@ -35,7 +36,7 @@ export const genSignInWithEmailAndPassword = async (email: string, password: str
   });
 };
 
-export const genSignUpWithEmailAndPassword = async (email: string, password: string): Promise<User> => {
+export const genSignUpWithEmailAndPassword = async (email: string, password: string): Promise<UserInfo> => {
   const auth = getAuth();
   return setPersistence(auth, browserLocalPersistence).then(async () => {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
@@ -49,7 +50,7 @@ export const genSignOut = (): Promise<void> => {
   return signOut(auth);
 };
 
-export const getUserFromFirebaseUserNonnull = (user: FirebaseUser): User => {
+export const getUserFromFirebaseUserNonnull = (user: FirebaseUser): UserInfo => {
   return {
     id: user.uid,
     email: user.email,
@@ -57,24 +58,16 @@ export const getUserFromFirebaseUserNonnull = (user: FirebaseUser): User => {
   };
 };
 
-export const getUserFromFirebaseUser = (user: FirebaseUser | null): User | null => {
+export const getUserFromFirebaseUser = (user: FirebaseUser | null): UserInfo | null => {
   if (user === null) {
     return null;
   }
   return getUserFromFirebaseUserNonnull(user);
 };
 
-export const init = (): AuthConfig => {
+export const init = (): void => {
   const auth = getAuth();
   onAuthStateChanged(auth, (user) => {
     store.dispatch(setUser(getUserFromFirebaseUser(user)));
   });
-
-  return {
-    signInRoute: 'signin',
-    signUpRoute: 'signup',
-    signOutRoute: 'signout',
-    resetPasswordRoute: 'resetpassword',
-    emailVerificationRoute: 'emailverification',
-  };
 };
