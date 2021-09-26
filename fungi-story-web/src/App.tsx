@@ -21,6 +21,10 @@ import {
 } from "react-router-dom";
 import EmailVerification from "./features/emailVerification/EmailVerification";
 
+import { changes, patch } from './lib/diffApis';
+
+console.log(changes, patch);
+
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
