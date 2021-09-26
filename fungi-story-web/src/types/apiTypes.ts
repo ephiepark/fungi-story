@@ -31,9 +31,36 @@ export interface GetUserInfoResponse {
   userInfo: UserInfo,
 };
 
+export interface DirectoryInfo {
+  id: string,
+  creator_user_id: string,
+  parent_directory_id: string | null,
+  directory_name: string,
+};
+
+export interface CreateDirectoryRequest {
+  creator_user_id: string,
+  parent_directory_id: string | null,
+  directory_name: string,
+};
+
+export interface CreateDirectoryResponse {
+  directoryInfo: DirectoryInfo,
+};
+
+export interface GetDirectoryInfoRequest {
+  id: string,
+};
+
+export interface GetDirectoryInfoResponse {
+  directoryInfo: DirectoryInfo,
+};
+
 export interface BackendApi {
   genCreateUser: (request: CreateUserRequest) => Promise<CreateUserResponse>,
   genUserInfo: (request: GetUserInfoRequest) => Promise<GetUserInfoResponse>,
+  genCreateDirectory: (request: CreateDirectoryRequest) => Promise<CreateDirectoryResponse>,
+  genDirectoryInfo: (request: GetDirectoryInfoRequest) => Promise<GetDirectoryInfoResponse>,
 };
 
 export interface AuthApi {
