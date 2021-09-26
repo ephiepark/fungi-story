@@ -67,7 +67,7 @@ export default function AppHeader(props: { authConfig: AuthConfig }) {
     >
       <Toolbar sx={{ flexWrap: 'wrap' }}>
         <Typography variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
-          <Link component={RouterLink} to="/">Company name</Link>
+          <Link component={RouterLink} to="/">Fungi</Link>
         </Typography>
         {nav}
       </Toolbar>
