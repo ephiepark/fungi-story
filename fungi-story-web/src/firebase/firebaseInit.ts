@@ -5,7 +5,7 @@ import { getAnalytics } from "firebase/analytics";
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 import firebaseConfig from "../firebase/firebaseConfig";
-import { initBackendApi } from '../backend/api';
+import { initBackendApi } from './firebaseBackendApis';
 import { getAuth } from "firebase/auth";
 import { initAuthApi } from './firebaseAuthApis';
 
