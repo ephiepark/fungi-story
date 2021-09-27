@@ -11,7 +11,8 @@ import {
   onAuthStateChanged,
   sendEmailVerification,
   Auth,
-  sendPasswordResetEmail
+  sendPasswordResetEmail,
+  UserCredential
 } from "firebase/auth";
 
 export const genSendEmailVerificationToCurrentUser = async (auth: Auth): Promise<void> => {
@@ -27,18 +28,17 @@ export const genSendPasswordResetEmail = async (auth: Auth, email: string): Prom
   return await sendPasswordResetEmail(auth, email);
 };
 
-export const genSignInWithEmailAndPassword = async (auth: Auth, backendApi: BackendApi, email: string, password: string): Promise<UserSession> => {
+export const genSignInWithEmailAndPassword = async (auth: Auth, email: string, password: string): Promise<UserCredential> => {
   return setPersistence(auth, browserLocalPersistence).then(async () => {
-    const userCredential = await signInWithEmailAndPassword(auth, email, password);
-    return genUserFromFirebaseUserNonnull(backendApi, userCredential.user);
+    return await signInWithEmailAndPassword(auth, email, password);
   });
 };
 
-export const genSignUpWithEmailAndPassword = async (auth: Auth, backendApi: BackendApi, email: string, password: string): Promise<UserSession> => {
+export const genSignUpWithEmailAndPassword = async (auth: Auth, email: string, password: string): Promise<UserCredential> => {
   return setPersistence(auth, browserLocalPersistence).then(async () => {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     await genSendEmailVerificationToCurrentUser(auth);
-    return genUserFromFirebaseUserNonnull(backendApi, userCredential.user);
+    return userCredential
   });
 };
 
@@ -74,11 +74,11 @@ export const initAuthApi = (auth: Auth, backendApi: BackendApi): AuthApi => {
     genSendPasswordResetEmail: async (email: string) => {
       return await genSendPasswordResetEmail(auth, email);
     },
-    genSignInWithEmailAndPassword: async (email: string, password: string): Promise<UserSession> => {
-      return await genSignInWithEmailAndPassword(auth, backendApi, email, password);
+    genSignInWithEmailAndPassword: async (email: string, password: string): Promise<UserCredential> => {
+      return await genSignInWithEmailAndPassword(auth, email, password);
     },
-    genSignUpWithEmailAndPassword: async (email: string, password: string): Promise<UserSession> => {
-      return await genSignUpWithEmailAndPassword(auth, backendApi, email, password);
+    genSignUpWithEmailAndPassword: async (email: string, password: string): Promise<UserCredential> => {
+      return await genSignUpWithEmailAndPassword(auth, email, password);
     },
     genSignOut: async () => {
       return await genSignOut(auth);

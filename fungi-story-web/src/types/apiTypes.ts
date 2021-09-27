@@ -1,4 +1,4 @@
-import { User as FirebaseUser } from "firebase/auth";
+import { User as FirebaseUser, UserCredential } from "firebase/auth";
 
 export interface UserSession {
   id: string,
@@ -74,8 +74,8 @@ export interface BackendApi {
 export interface AuthApi {
   genSendEmailVerificationToCurrentUser: () => Promise<void>,
   genSendPasswordResetEmail: (email: string) => Promise<void>,
-  genSignInWithEmailAndPassword: (email: string, password: string) => Promise<UserSession>,
-  genSignUpWithEmailAndPassword: (email: string, password: string) => Promise<UserSession>,
+  genSignInWithEmailAndPassword: (email: string, password: string) => Promise<UserCredential>,
+  genSignUpWithEmailAndPassword: (email: string, password: string) => Promise<UserCredential>,
   genSignOut: () => Promise<void>,
   genUserFromFirebaseUserNonnull: (user: FirebaseUser) => Promise<UserSession>,
   genUserFromFirebaseUser: (user: FirebaseUser | null) => Promise<UserSession | null>,

@@ -1,9 +1,10 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
 
-import { UserSession } from '../../types/apiTypes';
+import { CreateUserRequest, UserSession } from '../../types/apiTypes';
 
-import { authApi } from '../../firebase/firebaseInit';
+import { authApi, backendApi } from '../../firebase/firebaseInit';
+import { parseIsolatedEntityName } from 'typescript';
 
 export interface SignUpState {
   error: {errorCode: string, errorMessage: string} | null;
@@ -17,13 +18,22 @@ const initialState: SignUpState = {
 
 export const signUpAsync = createAsyncThunk(
   'signUp/signUpRequest',
-  async (emailAndPassword: {email: string, password: string}): Promise<UserSession> => {
-    const response = await authApi.genSignUpWithEmailAndPassword(
-      emailAndPassword.email,
-      emailAndPassword.password
+  async (request: {email: string, password: string, penName: string}): Promise<UserSession> => {
+    const userCredential = await authApi.genSignUpWithEmailAndPassword(
+      request.email,
+      request.password
     );
+    const response = await backendApi.genCreateUser({
+      id: userCredential.user.uid,
+      email: request.email,
+      pen_name: request.penName,
+    });
     // The value we return becomes the `fulfilled` action payload
-    return response;
+    return {
+      id: userCredential.user.uid,
+      isVerified: userCredential.user.emailVerified,
+      userInfo: response.userInfo,
+    };
   }
 );
 

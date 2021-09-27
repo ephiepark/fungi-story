@@ -41,7 +41,8 @@ export default function SignUp(props: { routeConfig: RouteConfig }) {
     const data = new FormData(event.currentTarget);
     const email = data.get('email')?.toString() || '';
     const password = data.get('password')?.toString() || '';
-    dispatch(signUpAsync({email: email, password: password}));
+    const penName = data.get('penName')?.toString() || '';
+    dispatch(signUpAsync({email: email, password: password, penName: penName}));
   };
 
   const buttonConfig = {
@@ -70,27 +71,17 @@ export default function SignUp(props: { routeConfig: RouteConfig }) {
           {alert}
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
-              {/* <Grid item xs={12} sm={6}>
+              <Grid item xs={12}>
                 <TextField
-                  autoComplete="fname"
-                  name="firstName"
+                  autoComplete="Pen name"
+                  name="penName"
                   required
                   fullWidth
-                  id="firstName"
-                  label="First Name"
+                  id="penName"
+                  label="Pen Name"
                   autoFocus
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="lname"
-                />
-              </Grid> */}
               <Grid item xs={12}>
                 <TextField
                   required

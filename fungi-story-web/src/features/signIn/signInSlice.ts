@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
 
 import { UserSession } from '../../types/apiTypes';
-import { authApi } from '../../firebase/firebaseInit';
+import { authApi, backendApi } from '../../firebase/firebaseInit';
 
 export interface SignInState {
   error: {errorCode: string, errorMessage: string} | null;
@@ -17,12 +17,19 @@ const initialState: SignInState = {
 export const signInAsync = createAsyncThunk(
   'signIn/signInRequest',
   async (signInRequest: {email: string, password: string}): Promise<UserSession> => {
-    const response = await authApi.genSignInWithEmailAndPassword(
+    const userCredential = await authApi.genSignInWithEmailAndPassword(
       signInRequest.email,
       signInRequest.password
     );
+    const response = await backendApi.genUserInfo({
+      id: userCredential.user.uid
+    });
     // The value we return becomes the `fulfilled` action payload
-    return response;
+    return {
+      id: userCredential.user.uid,
+      isVerified: userCredential.user.emailVerified,
+      userInfo: response.userInfo,
+    };
   }
 );
 
