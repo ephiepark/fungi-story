@@ -24,22 +24,17 @@ const getUserInfoFromSnap = (docSnap: DocumentSnapshot<DocumentData>): UserInfo 
     // @ts-ignore
     email: docSnap.data().email,
     // @ts-ignore
-    personal_directory_id: docSnap.data().personal_directory_id,
+    created_time: docSnap.data().created_time,
   }
 };
 
 const genCreateUser = async (db: Firestore, request: CreateUserRequest): Promise<CreateUserResponse> => {
   const docRef = doc(db, firestoreConfig.collection.user, request.id);
-  const personal_directory = await genCreateDirectory(db, {
-    creator_user_id: request.id,
-    directory_name: 'personal_directory',
-    parent_directory_id: null,
-  });
 
   await setDoc(docRef, {
     pen_name: request.pen_name,
     email: request.email,
-    personal_directory_id: personal_directory.directoryInfo.id,
+    created_time: Date.now(),
   });
 
   const docSnap = await getDoc(docRef);

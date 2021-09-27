@@ -10,7 +10,7 @@ export interface UserInfo {
   id: string,
   pen_name: string,
   email: string,
-  personal_directory_id: string,
+  created_time: number,
 };
 
 export interface CreateUserRequest {
