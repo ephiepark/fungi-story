@@ -4,16 +4,16 @@ import { firestoreConfig } from './firebaseConfig';
 
 import {
   BackendApi,
-  CreateDirectoryRequest,
-  CreateDirectoryResponse,
+  CreateUniverseRequest,
   CreateUserRequest,
   CreateUserResponse,
-  DirectoryInfo,
-  GetDirectoryInfoRequest,
-  GetDirectoryInfoResponse,
+  UniverseInfo,
+  GetUniverseInfoRequest,
   GetUserInfoRequest,
   GetUserInfoResponse,
   UserInfo,
+  CreateUniverseResponse,
+  GetUniverseInfoResponse,
 } from '../types/apiTypes';
 
 const getUserInfoFromSnap = (docSnap: DocumentSnapshot<DocumentData>): UserInfo => {
@@ -52,37 +52,37 @@ const genUserInfo = async (db: Firestore, request: GetUserInfoRequest): Promise<
   };
 }
 
-const getDirectoryInfoFromSnap = (docSnap: DocumentSnapshot<DocumentData>): DirectoryInfo => {
+const getUniverseInfoFromSnap = (docSnap: DocumentSnapshot<DocumentData>): UniverseInfo => {
   return {
     id: docSnap.id,
     // @ts-ignore
     creator_user_id: docSnap.data().creator_user_id,
     // @ts-ignore
-    directory_name: docSnap.data().directory_name,
+    universe_name: docSnap.data().universe_name,
     // @ts-ignore
-    parent_directory_id: docSnap.data().parent_directory_id,
+    created_time: docSnap.data().created_time,
   }
 };
 
-const genCreateDirectory = async (db: Firestore, request: CreateDirectoryRequest): Promise<CreateDirectoryResponse> => {
-  const docRef = await addDoc(collection(db, firestoreConfig.collection.directory), {
+const genCreateUniverse = async (db: Firestore, request: CreateUniverseRequest): Promise<CreateUniverseResponse> => {
+  const docRef = await addDoc(collection(db, firestoreConfig.collection.universe), {
     creator_user_id: request.creator_user_id,
-    directory_name: request.directory_name,
-    parent_directory_id: request.parent_directory_id,
+    universe_name: request.universe_name,
+    created_time: Date.now(),
   });
 
   const docSnap = await getDoc(docRef);
 
   return {
-    directoryInfo: getDirectoryInfoFromSnap(docSnap),
+    universeInfo: getUniverseInfoFromSnap(docSnap),
   };
 };
 
-const genDirectoryInfo = async (db: Firestore, request: GetDirectoryInfoRequest): Promise<GetDirectoryInfoResponse> => {
+const genUniverseInfo = async (db: Firestore, request: GetUniverseInfoRequest): Promise<GetUniverseInfoResponse> => {
   const docRef = doc(db, firestoreConfig.collection.user, request.id);
   const docSnap = await getDoc(docRef);
   return {
-    directoryInfo: getDirectoryInfoFromSnap(docSnap),
+    universeInfo: getUniverseInfoFromSnap(docSnap),
   };
 };
 
@@ -95,11 +95,11 @@ export const initBackendApi = (app: FirebaseApp): BackendApi => {
     genUserInfo: async (request: GetUserInfoRequest) => {
       return await genUserInfo(db, request);
     },
-    genCreateDirectory: async (request: CreateDirectoryRequest) => {
-      return await genCreateDirectory(db, request);
+    genCreateUniverse: async (request: CreateUniverseRequest) => {
+      return await genCreateUniverse(db, request);
     },
-    genDirectoryInfo: async (request: GetDirectoryInfoRequest) => {
-      return await genDirectoryInfo(db, request);
+    genUniverseInfo: async (request: GetUniverseInfoRequest) => {
+      return await genUniverseInfo(db, request);
     },
   };
 };

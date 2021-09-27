@@ -11,6 +11,6 @@ export default {
 export const firestoreConfig = {
   collection: {
     user: 'USER',
-    directory: 'DIRECTORY',
+    universe: 'UNIVERSE',
   },
 };

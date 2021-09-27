@@ -31,36 +31,35 @@ export interface GetUserInfoResponse {
   userInfo: UserInfo,
 };
 
-export interface DirectoryInfo {
+export interface UniverseInfo {
   id: string,
   creator_user_id: string,
-  parent_directory_id: string | null,
-  directory_name: string,
+  universe_name: string,
+  created_time: number,
 };
 
-export interface CreateDirectoryRequest {
+export interface CreateUniverseRequest {
   creator_user_id: string,
-  parent_directory_id: string | null,
-  directory_name: string,
+  universe_name: string,
 };
 
-export interface CreateDirectoryResponse {
-  directoryInfo: DirectoryInfo,
+export interface CreateUniverseResponse {
+  universeInfo: UniverseInfo,
 };
 
-export interface GetDirectoryInfoRequest {
+export interface GetUniverseInfoRequest {
   id: string,
 };
 
-export interface GetDirectoryInfoResponse {
-  directoryInfo: DirectoryInfo,
+export interface GetUniverseInfoResponse {
+  universeInfo: UniverseInfo,
 };
 
 export interface BackendApi {
   genCreateUser: (request: CreateUserRequest) => Promise<CreateUserResponse>,
   genUserInfo: (request: GetUserInfoRequest) => Promise<GetUserInfoResponse>,
-  genCreateDirectory: (request: CreateDirectoryRequest) => Promise<CreateDirectoryResponse>,
-  genDirectoryInfo: (request: GetDirectoryInfoRequest) => Promise<GetDirectoryInfoResponse>,
+  genCreateUniverse: (request: CreateUniverseRequest) => Promise<CreateUniverseResponse>,
+  genUniverseInfo: (request: GetUniverseInfoRequest) => Promise<GetUniverseInfoResponse>,
 };
 
 export interface AuthApi {
