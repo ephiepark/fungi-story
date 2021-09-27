@@ -55,11 +55,20 @@ export interface GetUniverseInfoResponse {
   universeInfo: UniverseInfo,
 };
 
+export interface GetUniverseInfoListForUserRequest {
+  user_id: string,
+};
+
+export interface GetUniverseInfoListForUserResponse {
+  universeInfoList: Array<UniverseInfo>,
+};
+
 export interface BackendApi {
   genCreateUser: (request: CreateUserRequest) => Promise<CreateUserResponse>,
   genUserInfo: (request: GetUserInfoRequest) => Promise<GetUserInfoResponse>,
   genCreateUniverse: (request: CreateUniverseRequest) => Promise<CreateUniverseResponse>,
   genUniverseInfo: (request: GetUniverseInfoRequest) => Promise<GetUniverseInfoResponse>,
+  genUniverseInfoListForUser: (request: GetUniverseInfoListForUserRequest) => Promise<GetUniverseInfoListForUserResponse>,
 };
 
 export interface AuthApi {

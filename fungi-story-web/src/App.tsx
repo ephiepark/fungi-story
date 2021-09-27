@@ -17,6 +17,7 @@ import {
 import EmailVerification from "./features/emailVerification/EmailVerification";
 
 import { changes, patch } from './lib/diffApis';
+import UniverseFinder from "./features/universe/finder/UniverseFinder";
 
 console.log(changes, patch);
 
@@ -41,8 +42,11 @@ function App() {
         <Route path={'/' + routeConfig.emailVerificationRoute}>
           <EmailVerification />
         </Route>
+        <Route path={'/' + routeConfig.universeFinderRoute}>
+          <UniverseFinder />
+        </Route>
         <Route path="/">
-          {isVerificationNecessary ? <Redirect to={'/' + routeConfig.emailVerificationRoute} /> : text}
+          {isVerificationNecessary ? <Redirect to={'/' + routeConfig.emailVerificationRoute} /> : <Redirect to={'/' + routeConfig.universeFinderRoute} />}
         </Route>
       </Switch>
     </Router>

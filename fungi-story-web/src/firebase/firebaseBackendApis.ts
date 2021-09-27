@@ -1,5 +1,5 @@
 import { FirebaseApp } from "firebase/app";
-import { doc, setDoc, Firestore, getDoc, DocumentSnapshot, DocumentData, getFirestore, addDoc, collection } from "firebase/firestore";
+import { doc, setDoc, Firestore, getDoc, DocumentSnapshot, DocumentData, getFirestore, addDoc, collection, where, query, getDocs } from "firebase/firestore";
 import { firestoreConfig } from './firebaseConfig';
 
 import {
@@ -14,7 +14,10 @@ import {
   UserInfo,
   CreateUniverseResponse,
   GetUniverseInfoResponse,
+  GetUniverseInfoListForUserRequest,
+  GetUniverseInfoListForUserResponse,
 } from '../types/apiTypes';
+import { dialogContentClasses } from "@mui/material";
 
 const getUserInfoFromSnap = (docSnap: DocumentSnapshot<DocumentData>): UserInfo => {
   return {
@@ -86,6 +89,18 @@ const genUniverseInfo = async (db: Firestore, request: GetUniverseInfoRequest): 
   };
 };
 
+const genUniverseInfoListForUser = async (db: Firestore, request: GetUniverseInfoListForUserRequest): Promise<GetUniverseInfoListForUserResponse> => {
+  const q = query(collection(db, firestoreConfig.collection.universe), where("creator_user_id", "==", request.user_id));
+  const querySnapshot = await getDocs(q);
+  const universeInfoList: Array<UniverseInfo> = [];
+  querySnapshot.forEach((doc) => {
+    universeInfoList.push(getUniverseInfoFromSnap(doc));
+  });
+  return {
+    universeInfoList: universeInfoList,
+  };
+};
+
 export const initBackendApi = (app: FirebaseApp): BackendApi => {
   const db = getFirestore(app);
   return {
@@ -100,6 +115,9 @@ export const initBackendApi = (app: FirebaseApp): BackendApi => {
     },
     genUniverseInfo: async (request: GetUniverseInfoRequest) => {
       return await genUniverseInfo(db, request);
+    },
+    genUniverseInfoListForUser: async (request: GetUniverseInfoListForUserRequest) => {
+      return await genUniverseInfoListForUser(db, request);
     },
   };
 };

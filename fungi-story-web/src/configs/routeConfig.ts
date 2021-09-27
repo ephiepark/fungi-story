@@ -12,4 +12,5 @@ export const routeConfig = {
   signOutRoute: 'signout',
   resetPasswordRoute: 'resetpassword',
   emailVerificationRoute: 'emailverification',
+  universeFinderRoute: 'universeFinder',
 };
