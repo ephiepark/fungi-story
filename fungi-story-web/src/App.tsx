@@ -26,6 +26,12 @@ function App() {
   const text = user === null ? 'Logged out' : 'Logged in as ' + user.userInfo.email;
   const isVerified = user?.isVerified;
   const isVerificationNecessary = (user !== null && !isVerified);
+  let home = null;
+  if (user === null) {
+    home = <SignIn routeConfig={routeConfig} />;
+  } else {
+    home = isVerificationNecessary ? <Redirect to={'/' + routeConfig.emailVerificationRoute} /> : <Redirect to={'/' + routeConfig.universeFinderRoute} />;
+  }
   return (
     <Router>
       <AppHeader routeConfig={routeConfig} />
@@ -46,7 +52,7 @@ function App() {
           <UniverseFinder />
         </Route>
         <Route path="/">
-          {isVerificationNecessary ? <Redirect to={'/' + routeConfig.emailVerificationRoute} /> : <Redirect to={'/' + routeConfig.universeFinderRoute} />}
+          {home}
         </Route>
       </Switch>
     </Router>

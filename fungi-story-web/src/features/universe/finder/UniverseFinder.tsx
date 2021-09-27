@@ -24,9 +24,11 @@ export default function UniverseFinder() {
     }
   }, [user?.id]);
 
-
   if (user !== null && !user.isVerified) {
     return <Redirect to={'/' + routeConfig.emailVerificationRoute} />;
+  }
+  if (user === null) {
+    return <Redirect to={'/'} />;
   }
 
   const alertMessage = error === null ? '' : error?.errorMessage ?? '';
