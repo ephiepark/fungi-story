@@ -1,5 +1,9 @@
 import { User as FirebaseUser, UserCredential } from "firebase/auth";
 
+export interface Unsubscribe {
+  (): void;
+};
+
 export interface UserSession {
   id: string,
   isVerified: boolean,
@@ -69,6 +73,10 @@ export interface BackendApi {
   genCreateUniverse: (request: CreateUniverseRequest) => Promise<CreateUniverseResponse>,
   genUniverseInfo: (request: GetUniverseInfoRequest) => Promise<GetUniverseInfoResponse>,
   genUniverseInfoListForUser: (request: GetUniverseInfoListForUserRequest) => Promise<GetUniverseInfoListForUserResponse>,
+};
+
+export interface SubscribeApi {
+  subscribeToUserInfo: (request: GetUserInfoRequest,  cb: (userInfo: UserInfo) => void) => Unsubscribe,
 };
 
 export interface AuthApi {

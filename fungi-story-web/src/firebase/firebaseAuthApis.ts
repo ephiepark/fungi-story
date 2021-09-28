@@ -1,6 +1,6 @@
 import { setUser } from '../features/user/userSlice';
 import { store } from '../app/store';
-import { AuthApi, BackendApi, UserSession } from "../types/apiTypes";
+import { AuthApi, BackendApi, SubscribeApi, UserInfo, UserSession } from "../types/apiTypes";
 import {
   User as FirebaseUser,
   signInWithEmailAndPassword,
@@ -12,8 +12,9 @@ import {
   sendEmailVerification,
   Auth,
   sendPasswordResetEmail,
-  UserCredential
+  UserCredential,
 } from "firebase/auth";
+import { doc, onSnapshot } from 'firebase/firestore';
 
 export const genSendEmailVerificationToCurrentUser = async (auth: Auth): Promise<void> => {
   const currentUser = auth.currentUser;
@@ -46,13 +47,17 @@ export const genSignOut = (auth: Auth): Promise<void> => {
   return signOut(auth);
 };
 
+export const getUserFromFirebaseUserAndUserInfo = (firebaseUser: FirebaseUser, userInfo: UserInfo): UserSession => {
+  return {
+    id: firebaseUser.uid,
+    isVerified: firebaseUser.emailVerified,
+    userInfo: userInfo,
+  };
+};
+
 export const genUserFromFirebaseUserNonnull = async (backendApi: BackendApi, user: FirebaseUser): Promise<UserSession> => {
   const userInfoResponse = await backendApi.genUserInfo({id: user.uid});
-  return {
-    id: user.uid,
-    isVerified: user.emailVerified,
-    userInfo: userInfoResponse.userInfo,
-  };
+  return getUserFromFirebaseUserAndUserInfo(user, userInfoResponse.userInfo);
 };
 
 export const genUserFromFirebaseUser = async (backendApi: BackendApi, user: FirebaseUser | null): Promise<UserSession | null> => {
@@ -62,10 +67,16 @@ export const genUserFromFirebaseUser = async (backendApi: BackendApi, user: Fire
   return await genUserFromFirebaseUserNonnull(backendApi, user);
 };
 
-export const initAuthApi = (auth: Auth, backendApi: BackendApi): AuthApi => {
+export const initAuthApi = (auth: Auth, backendApi: BackendApi, subscribeApi: SubscribeApi): AuthApi => {
   onAuthStateChanged(auth, async (user) => {
-    const userSession = await genUserFromFirebaseUser(backendApi, user);
-    store.dispatch(setUser(userSession));
+    if (user !== null) {
+      const unsub = subscribeApi.subscribeToUserInfo({id: user.uid}, (userInfo: UserInfo) => {
+        const userSession = getUserFromFirebaseUserAndUserInfo(user, userInfo);
+        store.dispatch(setUser(userSession));
+      });
+      return unsub;
+    }
+    store.dispatch(setUser(null));
   });
   return {
     genSendEmailVerificationToCurrentUser: async () => {

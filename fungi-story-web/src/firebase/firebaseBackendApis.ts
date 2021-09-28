@@ -1,5 +1,5 @@
 import { FirebaseApp } from "firebase/app";
-import { doc, setDoc, Firestore, getDoc, DocumentSnapshot, DocumentData, getFirestore, addDoc, collection, where, query, getDocs } from "firebase/firestore";
+import { doc, setDoc, Firestore, getDoc, DocumentSnapshot, DocumentData, getFirestore, addDoc, collection, where, query, getDocs, onSnapshot } from "firebase/firestore";
 import { firestoreConfig } from './firebaseConfig';
 
 import {
@@ -17,9 +17,8 @@ import {
   GetUniverseInfoListForUserRequest,
   GetUniverseInfoListForUserResponse,
 } from '../types/apiTypes';
-import { dialogContentClasses } from "@mui/material";
 
-const getUserInfoFromSnap = (docSnap: DocumentSnapshot<DocumentData>): UserInfo => {
+export const getUserInfoFromSnap = (docSnap: DocumentSnapshot<DocumentData>): UserInfo => {
   return {
     id: docSnap.id,
     // @ts-ignore

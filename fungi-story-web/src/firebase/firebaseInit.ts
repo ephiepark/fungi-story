@@ -8,6 +8,7 @@ import firebaseConfig from "../firebase/firebaseConfig";
 import { initBackendApi } from './firebaseBackendApis';
 import { getAuth } from "firebase/auth";
 import { initAuthApi } from './firebaseAuthApis';
+import { initSubscribeApi } from "./firebaseSubscribeApis";
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -15,4 +16,5 @@ const analytics = getAnalytics(app);
 const auth = getAuth(app);
 
 export const backendApi = initBackendApi(app);
-export const authApi = initAuthApi(auth, backendApi);
+export const subscribeApi = initSubscribeApi(app);
+export const authApi = initAuthApi(auth, backendApi, subscribeApi);
