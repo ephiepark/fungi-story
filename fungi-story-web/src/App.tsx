@@ -18,7 +18,8 @@ import EmailVerification from "./features/emailVerification/EmailVerification";
 
 import { changes, patch } from './lib/diffApis';
 import UniverseFinder from "./features/universe/finder/UniverseFinder";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
+import UniverseEditor from "./features/universe/editor/UniverseEditor";
 
 console.log(changes, patch);
 
@@ -51,6 +52,9 @@ function App() {
         </Route>
         <Route path={'/' + routeConfig.universeFinderRoute}>
           <UniverseFinder />
+        </Route>
+        <Route path={'/' + routeConfig.universeEditorRoute}>
+          <UniverseEditor />
         </Route>
         <Route path="/">
           {home}

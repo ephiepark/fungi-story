@@ -13,4 +13,5 @@ export const routeConfig = {
   resetPasswordRoute: 'resetpassword',
   emailVerificationRoute: 'emailverification',
   universeFinderRoute: 'universeFinder',
+  universeEditorRoute: 'universeEditor',
 };

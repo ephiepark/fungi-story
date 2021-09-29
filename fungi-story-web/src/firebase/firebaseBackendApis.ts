@@ -16,6 +16,8 @@ import {
   GetUniverseInfoResponse,
   GetUniverseInfoListForUserRequest,
   GetUniverseInfoListForUserResponse,
+  UpdateUniverseRequest,
+  UpdateUniverseResponse,
 } from '../types/apiTypes';
 
 export const getUserInfoFromSnap = (docSnap: DocumentSnapshot<DocumentData>): UserInfo => {
@@ -60,18 +62,34 @@ const getUniverseInfoFromSnap = (docSnap: DocumentSnapshot<DocumentData>): Unive
     // @ts-ignore
     creator_user_id: docSnap.data().creator_user_id,
     // @ts-ignore
-    universe_name: docSnap.data().universe_name,
-    // @ts-ignore
     created_time: docSnap.data().created_time,
+    universe_data: {
+      // @ts-ignore
+      universe_name: docSnap.data().universe_name,
+    },
   }
 };
 
 const genCreateUniverse = async (db: Firestore, request: CreateUniverseRequest): Promise<CreateUniverseResponse> => {
   const docRef = await addDoc(collection(db, firestoreConfig.collection.universe), {
     creator_user_id: request.creator_user_id,
-    universe_name: request.universe_name,
+    universe_name: request.universe_data.universe_name,
     created_time: Date.now(),
   });
+
+  const docSnap = await getDoc(docRef);
+
+  return {
+    universeInfo: getUniverseInfoFromSnap(docSnap),
+  };
+};
+
+const genUpdateUniverse = async (db: Firestore, request: UpdateUniverseRequest): Promise<UpdateUniverseResponse> => {
+  const docRef = doc(db, firestoreConfig.collection.universe, request.id);
+
+  await setDoc(docRef, {
+    universe_name: request.universeData.universe_name,
+  }, { merge: true });
 
   const docSnap = await getDoc(docRef);
 
@@ -111,6 +129,9 @@ export const initBackendApi = (app: FirebaseApp): BackendApi => {
     },
     genCreateUniverse: async (request: CreateUniverseRequest) => {
       return await genCreateUniverse(db, request);
+    },
+    genUpdateUniverse: async (request: UpdateUniverseRequest) => {
+      return await genUpdateUniverse(db, request);
     },
     genUniverseInfo: async (request: GetUniverseInfoRequest) => {
       return await genUniverseInfo(db, request);

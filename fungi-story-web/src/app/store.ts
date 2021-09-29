@@ -5,6 +5,7 @@ import signUpReducer from '../features/signUp/signUpSlice';
 import resetPasswordReducer from '../features/resetPassword/resetPasswordSlice';
 import emailVerificationReducer from '../features/emailVerification/emailVerificationSlice';
 import universeFinderReducer from '../features/universe/finder/universeFinderSlice'
+import universeEditorReducer from '../features/universe/editor/universeEditorSlice'
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
     resetPassword: resetPasswordReducer,
     emailVerification: emailVerificationReducer,
     universeFinder: universeFinderReducer,
+    universeEditor: universeEditorReducer,
   },
 });
 

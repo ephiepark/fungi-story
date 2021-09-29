@@ -35,21 +35,35 @@ export interface GetUserInfoResponse {
   userInfo: UserInfo,
 };
 
+export interface UniverseData {
+  universe_name: string,
+};
+
 export interface UniverseInfo {
   id: string,
   creator_user_id: string,
-  universe_name: string,
   created_time: number,
+  universe_data: UniverseData,
 };
 
 export interface CreateUniverseRequest {
   creator_user_id: string,
-  universe_name: string,
+  universe_data: UniverseData,
 };
 
 export interface CreateUniverseResponse {
   universeInfo: UniverseInfo,
 };
+
+export interface UpdateUniverseRequest {
+  id: string,
+  updater_user_id: string,
+  universeData: UniverseData,
+};
+
+export interface UpdateUniverseResponse {
+  universeInfo: UniverseInfo,
+}
 
 export interface GetUniverseInfoRequest {
   id: string,
@@ -71,6 +85,7 @@ export interface BackendApi {
   genCreateUser: (request: CreateUserRequest) => Promise<CreateUserResponse>,
   genUserInfo: (request: GetUserInfoRequest) => Promise<GetUserInfoResponse>,
   genCreateUniverse: (request: CreateUniverseRequest) => Promise<CreateUniverseResponse>,
+  genUpdateUniverse: (request: UpdateUniverseRequest) => Promise<UpdateUniverseResponse>,
   genUniverseInfo: (request: GetUniverseInfoRequest) => Promise<GetUniverseInfoResponse>,
   genUniverseInfoListForUser: (request: GetUniverseInfoListForUserRequest) => Promise<GetUniverseInfoListForUserResponse>,
 };
