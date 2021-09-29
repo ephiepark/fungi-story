@@ -20,7 +20,7 @@ import { Copyright } from '../../../components/Copyright';
 
 import { Link as RouterLink, Redirect, useLocation, useParams } from "react-router-dom";
 import { useDispatch } from 'react-redux';
-import { selectUniverseEditorFetchError, selectUniverseEditorFetchStatus, fetchUniverseInfoAsync, createUniverseAsync, updateUniverseAsync, selectUniverseEditorUpdateStatus, selectUniverseEditorUpdateError } from './universeEditorSlice';
+import { resetState, selectUniverseEditorFetchError, selectUniverseEditorFetchStatus, fetchUniverseInfoAsync, createUniverseAsync, updateUniverseAsync, selectUniverseEditorUpdateStatus, selectUniverseEditorUpdateError, selectUniverseEditorUniverseInfo } from './universeEditorSlice';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useEffect } from 'react';
 import { routeConfig } from '../../../configs/routeConfig';
@@ -36,6 +36,7 @@ export default function UniverseEditor() {
   const universeId = query.get('universeId');
   const dispatch = useDispatch();
   const user = useAppSelector(selectUser);
+  const universeInfo = useAppSelector(selectUniverseEditorUniverseInfo);
   const fetchError = useAppSelector(selectUniverseEditorFetchError);
   const fetchStatus = useAppSelector(selectUniverseEditorFetchStatus);
   const updateError = useAppSelector(selectUniverseEditorUpdateError);
@@ -47,11 +48,21 @@ export default function UniverseEditor() {
     }
   }, [universeId]);
 
+  useEffect(() => {
+    return () => {
+      dispatch(resetState());
+    };
+  }, []);
+
   if (user !== null && !user.isVerified) {
     return <Redirect to={'/' + routeConfig.emailVerificationRoute} />;
   }
   if (user === null) {
     return <Redirect to={'/'} />;
+  }
+
+  if (updateStatus === 'fulfilled' && universeInfo !== null) {
+    return <Redirect to={'/' + routeConfig.universeFinderRoute} />;
   }
 
   let alert = null;

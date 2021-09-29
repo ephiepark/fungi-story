@@ -39,6 +39,7 @@ export const createUniverseAsync = createAsyncThunk(
       creator_user_id: request.userId,
       universe_data: request.universeData,
     });
+    console.log(response);
     return response.universeInfo;
   }
 );
@@ -51,14 +52,25 @@ export const updateUniverseAsync = createAsyncThunk(
       updater_user_id: request.userId,
       universeData: request.universeData,
     });
+    console.log(response);
     return response.universeInfo;
   }
 );
 
 export const universeEditorSlice = createSlice({
-  name: 'universeFinder',
+  name: 'universeEditor',
   initialState,
-  reducers: {},
+  reducers: {
+    resetState: state => {
+      return {
+        fetchError: null,
+        fetchStatus: 'idle',
+        updateError: null,
+        updateStatus: 'idle',
+        universeInfo: state.universeInfo,
+      }
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(createUniverseAsync.pending, (state) => {
@@ -118,7 +130,7 @@ export const universeEditorSlice = createSlice({
   },
 });
 
-// export const { } = signInSlice.actions;
+export const { resetState } = universeEditorSlice.actions;
 
 export const selectUniverseEditorFetchError = (state: RootState) => state.universeEditor.fetchError;
 export const selectUniverseEditorFetchStatus = (state: RootState) => state.universeEditor.fetchStatus;
