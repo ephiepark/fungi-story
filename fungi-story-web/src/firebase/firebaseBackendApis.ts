@@ -99,7 +99,7 @@ const genUpdateUniverse = async (db: Firestore, request: UpdateUniverseRequest):
 };
 
 const genUniverseInfo = async (db: Firestore, request: GetUniverseInfoRequest): Promise<GetUniverseInfoResponse> => {
-  const docRef = doc(db, firestoreConfig.collection.user, request.id);
+  const docRef = doc(db, firestoreConfig.collection.universe, request.id);
   const docSnap = await getDoc(docRef);
   return {
     universeInfo: getUniverseInfoFromSnap(docSnap),
