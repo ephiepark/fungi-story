@@ -57,10 +57,10 @@ function App() {
           <Route path={'/' + routeConfig.universeFinderRoute}>
             <UniverseFinder />
           </Route>
-          <Route path={'/' + routeConfig.universeEditorRoute}>
+          <Route path={`/${routeConfig.universeEditorRoute}/:universeId`}>
             <UniverseEditor />
           </Route>
-          <Route path={'/' + routeConfig.universeViewerRoute}>
+          <Route path={`/${routeConfig.universeViewerRoute}/:universeId`}>
             <UniverseViewer />
           </Route>
           <Route path="/">

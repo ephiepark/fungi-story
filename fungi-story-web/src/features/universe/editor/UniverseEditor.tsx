@@ -27,13 +27,8 @@ import { routeConfig } from '../../../configs/routeConfig';
 
 const theme = createTheme();
 
-function useQuery() {
-  return new URLSearchParams(useLocation().search);
-}
-
 export default function UniverseEditor() {
-  const query = useQuery();
-  const universeId = query.get('universeId');
+  const { universeId } = useParams<{universeId: string}>();
   const dispatch = useDispatch();
   const user = useAppSelector(selectUser);
   const universeInfo = useAppSelector(selectUniverseEditorUniverseInfo);
@@ -42,8 +37,10 @@ export default function UniverseEditor() {
   const updateError = useAppSelector(selectUniverseEditorUpdateError);
   const updateStatus = useAppSelector(selectUniverseEditorUpdateStatus);
 
+  console.log('unvierseEdtiro');
+
   useEffect(() => {
-    if (universeId !== null) {
+    if (universeId !== 'create') {
       dispatch(fetchUniverseInfoAsync(universeId));
     }
   }, [universeId]);
@@ -80,14 +77,14 @@ export default function UniverseEditor() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const universeName = data.get('universeName')?.toString() || '';
-    if (universeId === null) {
+    if (universeId === 'create') {
       dispatch(createUniverseAsync({userId: user!.id, universeData: {universe_name: universeName}}));
     } else {
       dispatch(updateUniverseAsync({universeId: universeId, userId: user!.id, universeData: {universe_name: universeName}}));
     }
   };
 
-  const buttonContent = universeId === null ? 'Create' : 'Update';
+  const buttonContent = universeId === 'create' ? 'Create' : 'Update';
   const buttonConfig = {
     disabled: updateStatus === 'pending',
     content: updateStatus === 'pending' ? <div>{buttonContent}<CircularProgress size={10}/></div> : buttonContent,

@@ -1,4 +1,4 @@
-import { Alert, Box, Container, CssBaseline, Icon, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { Alert, Box, Container, CssBaseline, Icon, IconButton, Link, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useDispatch } from 'react-redux';
 import { Link as RouterLink, Redirect, useHistory } from 'react-router-dom';
@@ -49,7 +49,7 @@ export default function UniverseFinder() {
           }}
         >
           {alert}
-          <IconButton component={RouterLink} to={'/' + routeConfig.universeEditorRoute}><Icon color="primary">add_circle</Icon></IconButton>
+          <IconButton component={RouterLink} to={`/${routeConfig.universeEditorRoute}/create`}><Icon color="primary">add_circle</Icon></IconButton>
           <TableContainer component={Paper}>
             <Table aria-label="simple table">
               <TableHead>
@@ -66,7 +66,7 @@ export default function UniverseFinder() {
                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                   >
                     <TableCell component="th" scope="row">
-                      {universeInfo.universe_data.universe_name}
+                      <Link component={RouterLink} to={`/${routeConfig.universeViewerRoute}/${universeInfo.id}`}>{universeInfo.universe_data.universe_name}</Link>
                     </TableCell>
                     <TableCell align="right">{universeInfo.creator_user_id}</TableCell>
                   </TableRow>);

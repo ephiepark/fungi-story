@@ -27,13 +27,8 @@ import { fetchUniverseInfoAsync, resetState, selectUniverseViewerFetchError, sel
 
 const theme = createTheme();
 
-function useQuery() {
-  return new URLSearchParams(useLocation().search);
-}
-
 export default function UniverseViewer() {
-  const query = useQuery();
-  const universeId = query.get('universeId');
+  const { universeId } = useParams<{universeId: string}>();
   const dispatch = useDispatch();
   const user = useAppSelector(selectUser);
   const universeInfo = useAppSelector(selectUniverseViewerUniverseInfo);
@@ -41,9 +36,7 @@ export default function UniverseViewer() {
   const fetchStatus = useAppSelector(selectUniverseViewerFetchStatus);
 
   useEffect(() => {
-    if (universeId !== null) {
-      dispatch(fetchUniverseInfoAsync(universeId));
-    }
+    dispatch(fetchUniverseInfoAsync(universeId));
   }, [universeId]);
 
   useEffect(() => {
