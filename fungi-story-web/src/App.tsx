@@ -20,6 +20,7 @@ import { changes, patch } from './lib/diffApis';
 import UniverseFinder from "./features/universe/finder/UniverseFinder";
 import React, { useEffect } from "react";
 import UniverseEditor from "./features/universe/editor/UniverseEditor";
+import UniverseViewer from "./features/universe/viewer/UniverseViewer";
 
 console.log(changes, patch);
 
@@ -58,6 +59,9 @@ function App() {
           </Route>
           <Route path={'/' + routeConfig.universeEditorRoute}>
             <UniverseEditor />
+          </Route>
+          <Route path={'/' + routeConfig.universeViewerRoute}>
+            <UniverseViewer />
           </Route>
           <Route path="/">
             {home}

@@ -14,4 +14,5 @@ export const routeConfig = {
   emailVerificationRoute: 'emailverification',
   universeFinderRoute: 'universeFinder',
   universeEditorRoute: 'universeEditor',
+  universeViewerRoute: 'universeViewer',
 };

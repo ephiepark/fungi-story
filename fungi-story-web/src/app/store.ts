@@ -4,8 +4,10 @@ import signInReducer from '../features/signIn/signInSlice';
 import signUpReducer from '../features/signUp/signUpSlice';
 import resetPasswordReducer from '../features/resetPassword/resetPasswordSlice';
 import emailVerificationReducer from '../features/emailVerification/emailVerificationSlice';
-import universeFinderReducer from '../features/universe/finder/universeFinderSlice'
-import universeEditorReducer from '../features/universe/editor/universeEditorSlice'
+import universeFinderReducer from '../features/universe/finder/universeFinderSlice';
+import universeEditorReducer from '../features/universe/editor/universeEditorSlice';
+import universeViewerReducer from '../features/universe/viewer/universeViewerSlice';
+
 
 export const store = configureStore({
   reducer: {
@@ -16,6 +18,7 @@ export const store = configureStore({
     emailVerification: emailVerificationReducer,
     universeFinder: universeFinderReducer,
     universeEditor: universeEditorReducer,
+    universeViewer: universeViewerReducer,
   },
 });
 
