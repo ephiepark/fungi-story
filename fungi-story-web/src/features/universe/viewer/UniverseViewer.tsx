@@ -24,8 +24,9 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { useEffect } from 'react';
 import { routeConfig } from '../../../configs/routeConfig';
 import { fetchUniverseInfoAsync, resetState, selectUniverseViewerFetchError, selectUniverseViewerFetchStatus, selectUniverseViewerUniverseInfo } from './universeViewerSlice';
+import { Divider, Drawer, List, ListItem, ListItemIcon, ListItemText, Toolbar } from '@mui/material';
 
-const theme = createTheme();
+const drawerWidth = 240;
 
 export default function UniverseViewer() {
   const { universeId } = useParams<{universeId: string}>();
@@ -77,18 +78,61 @@ export default function UniverseViewer() {
   //   disabled: updateStatus === 'pending',
   //   content: updateStatus === 'pending' ? <div>{buttonContent}<CircularProgress size={10}/></div> : buttonContent,
   // };
-
   return (
-    <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
+    <Container component="main" maxWidth="xs" sx={{zIndex: (theme) => theme.zIndex.drawer}}>
+      <CssBaseline />
+      <Box
+        sx={{
+          marginTop: 8,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        <Drawer
           sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
+            width: drawerWidth,
+            flexShrink: 0,
+            '& .MuiDrawer-paper': {
+              width: drawerWidth,
+              boxSizing: 'border-box',
+            },
+            zIndex: (theme) => {
+              console.log('drawer zIndex', theme.zIndex.drawer);
+              // return theme.zIndex.drawer;
+              return 0;
+            }
           }}
+          variant="permanent"
+          anchor="left"
+        >
+          <Toolbar />
+          <Divider />
+          <List>
+            {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+              <ListItem button key={text}>
+                <ListItemIcon>
+                  <LockOutlinedIcon />
+                </ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItem>
+            ))}
+          </List>
+          <Divider />
+          <List>
+            {['All mail', 'Trash', 'Spam'].map((text, index) => (
+              <ListItem button key={text}>
+                <ListItemIcon>
+                  <LockOutlinedIcon />
+                </ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItem>
+            ))}
+          </List>
+        </Drawer>
+        <Box
+          component="main"
+          sx={{ flexGrow: 1, bgcolor: 'background.default', p: 3 }}
         >
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <LockOutlinedIcon />
@@ -101,8 +145,8 @@ export default function UniverseViewer() {
             <div>{universeInfo?.universe_data.universe_name}</div>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 5 }} />
-      </Container>
-    </ThemeProvider>
+      </Box>
+      <Copyright sx={{ mt: 5 }} />
+    </Container>
   );
 }

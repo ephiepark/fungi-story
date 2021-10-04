@@ -21,8 +21,14 @@ import UniverseFinder from "./features/universe/finder/UniverseFinder";
 import React, { useEffect } from "react";
 import UniverseEditor from "./features/universe/editor/UniverseEditor";
 import UniverseViewer from "./features/universe/viewer/UniverseViewer";
+import { createTheme, ThemeProvider } from "@mui/material";
 
 console.log(changes, patch);
+const theme = createTheme({
+  zIndex: {
+    drawer: 10,
+  }
+});
 
 function App() {
   const user = useAppSelector(selectUser);
@@ -39,35 +45,37 @@ function App() {
       home = isVerificationNecessary ? <Redirect to={'/' + routeConfig.emailVerificationRoute} /> : <Redirect to={'/' + routeConfig.universeFinderRoute} />;
     }
     return (
-      <Router>
-        <AppHeader routeConfig={routeConfig} />
-        <Switch>
-          <Route path={'/' + routeConfig.signInRoute}>
-            <SignIn routeConfig={routeConfig} />
-          </Route>
-          <Route path={'/' + routeConfig.signUpRoute}>
-            <SignUp routeConfig={routeConfig} />
-          </Route>
-          <Route path={'/' + routeConfig.resetPasswordRoute}>
-            <ResetPassword routeConfig={routeConfig} />
-          </Route>
-          <Route path={'/' + routeConfig.emailVerificationRoute}>
-            <EmailVerification />
-          </Route>
-          <Route path={'/' + routeConfig.universeFinderRoute}>
-            <UniverseFinder />
-          </Route>
-          <Route path={`/${routeConfig.universeEditorRoute}/:universeId`}>
-            <UniverseEditor />
-          </Route>
-          <Route path={`/${routeConfig.universeViewerRoute}/:universeId`}>
-            <UniverseViewer />
-          </Route>
-          <Route path="/">
-            {home}
-          </Route>
-        </Switch>
-      </Router>
+      <ThemeProvider theme={theme}>
+        <Router>
+          <AppHeader routeConfig={routeConfig} />
+          <Switch>
+            <Route path={'/' + routeConfig.signInRoute}>
+              <SignIn routeConfig={routeConfig} />
+            </Route>
+            <Route path={'/' + routeConfig.signUpRoute}>
+              <SignUp routeConfig={routeConfig} />
+            </Route>
+            <Route path={'/' + routeConfig.resetPasswordRoute}>
+              <ResetPassword routeConfig={routeConfig} />
+            </Route>
+            <Route path={'/' + routeConfig.emailVerificationRoute}>
+              <EmailVerification />
+            </Route>
+            <Route path={'/' + routeConfig.universeFinderRoute}>
+              <UniverseFinder />
+            </Route>
+            <Route path={`/${routeConfig.universeEditorRoute}/:universeId`}>
+              <UniverseEditor />
+            </Route>
+            <Route path={`/${routeConfig.universeViewerRoute}/:universeId`}>
+              <UniverseViewer />
+            </Route>
+            <Route path="/">
+              {home}
+            </Route>
+          </Switch>
+        </Router>
+      </ThemeProvider>
     );
   }
 }
