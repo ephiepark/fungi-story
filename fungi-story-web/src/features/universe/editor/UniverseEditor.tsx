@@ -65,6 +65,10 @@ export default function UniverseEditor() {
     return <Redirect to={'/' + routeConfig.universeFinderRoute} />;
   }
 
+  if (fetchStatus === 'pending') {
+    return <div>loading</div>;
+  }
+
   let alert = null;
   if (fetchError !== null) {
     alert = <Alert severity="error">{fetchError.errorMessage}</Alert>;
@@ -119,6 +123,7 @@ export default function UniverseEditor() {
                   id="universeName"
                   label="Universe Name"
                   autoFocus
+                  defaultValue={universeInfo?.universe_data.universe_name}
                 />
               </Grid>
             </Grid>
