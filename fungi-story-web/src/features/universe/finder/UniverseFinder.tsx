@@ -22,11 +22,11 @@ export default function UniverseFinder() {
 
   useEffect(() => {
     if (user !== null) {
-      dispatch(fetchUniverseInfoListForUserAsync(user.userInfo));
+      dispatch(fetchUniverseInfoListForUserAsync(user!.userInfo));
     }
   }, [user?.id]);
 
-  if (user !== null && !user.isVerified) {
+  if (user !== null && !user!.isVerified) {
     return <Redirect to={'/' + routeConfig.emailVerificationRoute} />;
   }
   if (user === null) {

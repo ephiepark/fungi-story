@@ -2,12 +2,14 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
 import { UserSession } from "../../types/apiTypes";
 
+// null for logged out user
+// undefined for firebase authentication to initialize
 export interface UserState {
-  user: UserSession | null;
+  user: UserSession | null | undefined;
 }
 
 const initialState: UserState = {
-  user: null,
+  user: undefined,
 };
 
 export const userSlice = createSlice({

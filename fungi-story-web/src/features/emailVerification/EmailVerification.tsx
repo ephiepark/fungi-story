@@ -27,7 +27,7 @@ export default function EmailVerification() {
   const error = useAppSelector(selectEmailVerificationError);
   const user = useAppSelector(selectUser);
   const status = useAppSelector(selectEmailVerificationStatus);
-  if (user === null || user.isVerified) {
+  if (user === null || user!.isVerified) {
     return <Redirect to="/" />;
   }
 

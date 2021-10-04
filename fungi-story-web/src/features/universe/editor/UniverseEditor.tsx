@@ -54,7 +54,7 @@ export default function UniverseEditor() {
     };
   }, []);
 
-  if (user !== null && !user.isVerified) {
+  if (user !== null && !user!.isVerified) {
     return <Redirect to={'/' + routeConfig.emailVerificationRoute} />;
   }
   if (user === null) {

@@ -25,43 +25,47 @@ console.log(changes, patch);
 
 function App() {
   const user = useAppSelector(selectUser);
-  const text = user === null ? 'Logged out' : 'Logged in as ' + user.userInfo.email;
-  const isVerified = user?.isVerified;
-  const isVerificationNecessary = (user !== null && !isVerified);
-  let home = null;
-  if (user === null) {
-    home = <SignIn routeConfig={routeConfig} />;
+  if (user === undefined) {
+    return <div>loading</div>;
   } else {
-    home = isVerificationNecessary ? <Redirect to={'/' + routeConfig.emailVerificationRoute} /> : <Redirect to={'/' + routeConfig.universeFinderRoute} />;
+    const text = user === null ? 'Logged out' : 'Logged in as ' + user.userInfo.email;
+    const isVerified = user?.isVerified;
+    const isVerificationNecessary = (user !== null && !isVerified);
+    let home = null;
+    if (user === null) {
+      home = <SignIn routeConfig={routeConfig} />;
+    } else {
+      home = isVerificationNecessary ? <Redirect to={'/' + routeConfig.emailVerificationRoute} /> : <Redirect to={'/' + routeConfig.universeFinderRoute} />;
+    }
+    return (
+      <Router>
+        <AppHeader routeConfig={routeConfig} />
+        <Switch>
+          <Route path={'/' + routeConfig.signInRoute}>
+            <SignIn routeConfig={routeConfig} />
+          </Route>
+          <Route path={'/' + routeConfig.signUpRoute}>
+            <SignUp routeConfig={routeConfig} />
+          </Route>
+          <Route path={'/' + routeConfig.resetPasswordRoute}>
+            <ResetPassword routeConfig={routeConfig} />
+          </Route>
+          <Route path={'/' + routeConfig.emailVerificationRoute}>
+            <EmailVerification />
+          </Route>
+          <Route path={'/' + routeConfig.universeFinderRoute}>
+            <UniverseFinder />
+          </Route>
+          <Route path={'/' + routeConfig.universeEditorRoute}>
+            <UniverseEditor />
+          </Route>
+          <Route path="/">
+            {home}
+          </Route>
+        </Switch>
+      </Router>
+    );
   }
-  return (
-    <Router>
-      <AppHeader routeConfig={routeConfig} />
-      <Switch>
-        <Route path={'/' + routeConfig.signInRoute}>
-          <SignIn routeConfig={routeConfig} />
-        </Route>
-        <Route path={'/' + routeConfig.signUpRoute}>
-          <SignUp routeConfig={routeConfig} />
-        </Route>
-        <Route path={'/' + routeConfig.resetPasswordRoute}>
-          <ResetPassword routeConfig={routeConfig} />
-        </Route>
-        <Route path={'/' + routeConfig.emailVerificationRoute}>
-          <EmailVerification />
-        </Route>
-        <Route path={'/' + routeConfig.universeFinderRoute}>
-          <UniverseFinder />
-        </Route>
-        <Route path={'/' + routeConfig.universeEditorRoute}>
-          <UniverseEditor />
-        </Route>
-        <Route path="/">
-          {home}
-        </Route>
-      </Switch>
-    </Router>
-  );
 }
 
 export default App;
