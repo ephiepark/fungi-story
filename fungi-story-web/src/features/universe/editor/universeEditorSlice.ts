@@ -67,7 +67,7 @@ export const universeEditorSlice = createSlice({
         fetchStatus: 'idle',
         updateError: null,
         updateStatus: 'idle',
-        universeInfo: state.universeInfo,
+        universeInfo: null,
       }
     },
   },

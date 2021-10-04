@@ -35,7 +35,7 @@ export const universeViewerSlice = createSlice({
       return {
         fetchError: null,
         fetchStatus: 'idle',
-        universeInfo: state.universeInfo,
+        universeInfo: null,
       }
     },
   },
