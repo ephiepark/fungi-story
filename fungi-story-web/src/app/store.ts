@@ -7,6 +7,7 @@ import emailVerificationReducer from '../features/emailVerification/emailVerific
 import universeFinderReducer from '../features/universe/finder/universeFinderSlice';
 import universeEditorReducer from '../features/universe/editor/universeEditorSlice';
 import universeViewerReducer from '../features/universe/viewer/universeViewerSlice';
+import characterFinderReducer from '../features/character/finder/characterFinderSlice';
 
 
 export const store = configureStore({
@@ -19,6 +20,7 @@ export const store = configureStore({
     universeFinder: universeFinderReducer,
     universeEditor: universeEditorReducer,
     universeViewer: universeViewerReducer,
+    characterFinder: characterFinderReducer,
   },
 });
 

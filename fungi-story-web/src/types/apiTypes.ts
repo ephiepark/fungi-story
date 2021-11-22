@@ -81,6 +81,27 @@ export interface GetUniverseInfoListForUserResponse {
   universeInfoList: Array<UniverseInfo>,
 };
 
+export interface CharacterData {
+  characterName: string,
+  characterSummary: string,
+};
+
+export interface CharacterInfo {
+  id: string,
+  universeId: string,
+  creatorUserId: string,
+  createdTime: number,
+  characterData: CharacterData,
+};
+
+export interface GetCharacterListForUniverseRequest {
+  universeId: string,
+};
+
+export interface GetCharacterListForUniverseResponse {
+  characterInfoList: Array<CharacterInfo>,
+};
+
 export interface BackendApi {
   genCreateUser: (request: CreateUserRequest) => Promise<CreateUserResponse>,
   genUserInfo: (request: GetUserInfoRequest) => Promise<GetUserInfoResponse>,
@@ -88,6 +109,7 @@ export interface BackendApi {
   genUpdateUniverse: (request: UpdateUniverseRequest) => Promise<UpdateUniverseResponse>,
   genUniverseInfo: (request: GetUniverseInfoRequest) => Promise<GetUniverseInfoResponse>,
   genUniverseInfoListForUser: (request: GetUniverseInfoListForUserRequest) => Promise<GetUniverseInfoListForUserResponse>,
+  genCharacterInfoListForUniverse: (request: GetCharacterListForUniverseRequest) => Promise<GetCharacterListForUniverseResponse>,
 };
 
 export interface SubscribeApi {

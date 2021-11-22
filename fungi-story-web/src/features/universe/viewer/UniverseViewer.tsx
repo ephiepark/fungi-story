@@ -26,6 +26,8 @@ import { routeConfig } from '../../../configs/routeConfig';
 import { fetchUniverseInfoAsync, resetState, selectUniverseViewerFetchError, selectUniverseViewerFetchStatus, selectUniverseViewerUniverseInfo } from './universeViewerSlice';
 import { Divider, Drawer, List, ListItem, ListItemIcon, ListItemText, Toolbar } from '@mui/material';
 
+import CharacterFinder from '../../character/finder/CharacterFinder';
+
 const drawerWidth = 240;
 
 export default function UniverseViewer() {
@@ -109,7 +111,7 @@ export default function UniverseViewer() {
           <Toolbar />
           <Divider />
           <List>
-            {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+            {['Character', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
               <ListItem button key={text}>
                 <ListItemIcon>
                   <LockOutlinedIcon />
@@ -134,7 +136,8 @@ export default function UniverseViewer() {
           component="main"
           sx={{ flexGrow: 1, bgcolor: 'background.default', p: 3 }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          <CharacterFinder universeId={universeId} />
+          {/* <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
@@ -143,7 +146,7 @@ export default function UniverseViewer() {
           {alert}
           <Box sx={{ mt: 3 }}>
             <div>{universeInfo?.universe_data.universe_name}</div>
-          </Box>
+          </Box> */}
         </Box>
       </Box>
       <Copyright sx={{ mt: 5 }} />

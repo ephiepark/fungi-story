@@ -15,4 +15,5 @@ export const routeConfig = {
   universeFinderRoute: 'universeFinder',
   universeEditorRoute: 'universeEditor',
   universeViewerRoute: 'universeViewer',
+  characterViewerRoute: 'characterViewer',
 };

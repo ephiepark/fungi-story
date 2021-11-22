@@ -18,6 +18,9 @@ import {
   GetUniverseInfoListForUserResponse,
   UpdateUniverseRequest,
   UpdateUniverseResponse,
+  CharacterInfo,
+  GetCharacterListForUniverseRequest,
+  GetCharacterListForUniverseResponse,
 } from '../types/apiTypes';
 
 export const getUserInfoFromSnap = (docSnap: DocumentSnapshot<DocumentData>): UserInfo => {
@@ -118,6 +121,36 @@ const genUniverseInfoListForUser = async (db: Firestore, request: GetUniverseInf
   };
 };
 
+const getCharacterInfoFromSnap = (docSnap: DocumentSnapshot<DocumentData>): CharacterInfo => {
+  return {
+    id: docSnap.id,
+    // @ts-ignore
+    universeId: docSnap.data().universeId,
+    // @ts-ignore
+    creatorUserId: docSnap.data().creatorUserId,
+    // @ts-ignore
+    createdTime: docSnap.data().createdTime,
+    characterData: {
+      // @ts-ignore
+      characterName: docSnap.data().characterData.characterName,
+      // @ts-ignore
+      characterSummary: docSnap.data().characterData.characterSummary,
+    },
+  }
+};
+
+const genCharacterInfoListForUniverse = async (db: Firestore, request: GetCharacterListForUniverseRequest): Promise<GetCharacterListForUniverseResponse> => {
+  const q = query(collection(db, firestoreConfig.collection.character), where("universeId", "==", request.universeId));
+  const querySnapshot = await getDocs(q);
+  const characterInfoList: Array<CharacterInfo> = [];
+  querySnapshot.forEach((doc) => {
+    characterInfoList.push(getCharacterInfoFromSnap(doc));
+  });
+  return {
+    characterInfoList: characterInfoList,
+  };
+};
+
 export const initBackendApi = (app: FirebaseApp): BackendApi => {
   const db = getFirestore(app);
   return {
@@ -138,6 +171,9 @@ export const initBackendApi = (app: FirebaseApp): BackendApi => {
     },
     genUniverseInfoListForUser: async (request: GetUniverseInfoListForUserRequest) => {
       return await genUniverseInfoListForUser(db, request);
+    },
+    genCharacterInfoListForUniverse: async (request: GetCharacterListForUniverseRequest) => {
+      return await genCharacterInfoListForUniverse(db, request);
     },
   };
 };

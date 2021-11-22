@@ -12,5 +12,6 @@ export const firestoreConfig = {
   collection: {
     user: 'USER',
     universe: 'UNIVERSE',
+    character: 'CHARACTER',
   },
 };
